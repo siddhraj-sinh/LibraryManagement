@@ -519,7 +519,7 @@ namespace LibraryManagement
             }
         }
 
-        // Chage book status avilable or not
+        // Change book status avilable or not
         static void FilterBookByStatus()
         {
 
