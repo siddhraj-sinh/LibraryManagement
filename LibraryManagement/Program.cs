@@ -117,6 +117,7 @@ namespace LibraryManagement
             Console.WriteLine("\nEnter the number corresponding to the action you'd like to perform:");
         }
 
+        // Add a book
         static void AddBook() {
             Console.WriteLine("Enter the book title:");
             string title = Console.ReadLine();
@@ -130,7 +131,7 @@ namespace LibraryManagement
             string firstName = Console.ReadLine();
             Console.WriteLine("Enter the author's last name: ");
             string lastName = Console.ReadLine();
-            Console.WriteLine("Ener the author's date of birth (YYY--MM-DD): ");
+            Console.WriteLine("Ener the author's date of birth (YYYY-MM-DD): ");
             DateTime dateOfBirth = DateTime.Parse(Console.ReadLine());
             Console.WriteLine("Enter the publication year: ");
             int publicationYear = Convert.ToInt32(Console.ReadLine());
@@ -146,6 +147,8 @@ namespace LibraryManagement
             Console.WriteLine();
 
         }
+
+        // Update a book
         static void UpdateBook() {
 
             Console.WriteLine("Write title of the book that you want to update: ");
@@ -215,6 +218,8 @@ namespace LibraryManagement
             }
 
         }
+
+        // Delete a book
         static void DeleteBook() {
 
             Console.WriteLine("Write title of the book that you want to delete: ");
@@ -234,6 +239,7 @@ namespace LibraryManagement
             Console.WriteLine();
         }
 
+        // List all books
         static void ListAllBooks() {
             if(books.Count() == 0)
             {
@@ -247,84 +253,13 @@ namespace LibraryManagement
             Console.WriteLine();
         }
 
-        static void FilterBookByStatus() {
-
-            Console.WriteLine("Enter the availability status (true/false):");
-            string userInput = Console.ReadLine();
-            bool value = userInput.ToLower() == "true" ? true : false;
-
-
-            var book = books.FindAll(b => b.IsAvailable == value);
-            if (book != null)
-            {
-                Console.WriteLine("Filtered books: ");
-                foreach (Book b in book)
-                {
-                    Console.WriteLine(b.ToString());
-                    Console.WriteLine();
-                }
-            }
-            else
-            {
-                Console.WriteLine("Not found..!!");
-            }
-            Console.WriteLine();
-        }
-
-        static void BorrowBook() {
-            Console.WriteLine("Enter the title of book that you want to borrow: ");
-            string title = Console.ReadLine() ;
-            var book = books.Find(b => b.Title == title);
-            if (book != null)
-            {
-                if (book.IsAvailable)
-                {
-                    Console.WriteLine("Enter your first name: ");
-                    string firstName = Console.ReadLine();
-                    Console.WriteLine("Enter your last name: ");
-                    string lastName = Console.ReadLine();
-                    Console.WriteLine("Enter your email: ");
-                    string email = Console.ReadLine();
-                    Console.WriteLine("Enter your phone number: ");
-                    string phoneNumber = Console.ReadLine();
-                    Borrower borrower = new Borrower { FirstName=firstName, LastName=lastName, Email=email,PhoneNumber=phoneNumber};
-                    book.IsAvailable = false;
-                    Console.WriteLine("Book borrowed succesfully..!");
-                    borrowers.Add(borrower);
-                }
-                else
-                {
-                    Console.WriteLine("The book you want is not available..!");
-                }
-            }
-            Console.WriteLine();
-        }
-        static void ListAllBorrowedBooks()
-        {
-            var borrowedBooks = books.Where(b => b.IsAvailable == false);
-            if (borrowedBooks != null)
-            {
-                foreach (var b in borrowedBooks)
-                {
-                    Console.WriteLine(b.ToString());
-                    Console.WriteLine();
-                }
-            }
-            else
-            {
-                Console.WriteLine("No books is borrowed..!");
-            }
-            Console.WriteLine();
-        }
-
-
         //Add author
         static void AddAuthor() {
             Console.WriteLine("Enter the author's first name: ");
             string firstName = Console.ReadLine();
             Console.WriteLine("Enter the author's last name: ");
             string lastName = Console.ReadLine();
-            Console.WriteLine("Ener the author's date of birth (YYY--MM-DD): ");
+            Console.WriteLine("Ener the author's date of birth (YYYY-MM-DD): ");
             DateTime dateOfBirth = DateTime.Parse(Console.ReadLine());
            
             if (authors.Any(a => a.FirstName == firstName && a.LastName == lastName && a.DateOfBirth == dateOfBirth))
@@ -337,6 +272,7 @@ namespace LibraryManagement
             Console.WriteLine("author added succesfuly..!");
             Console.WriteLine();
         }
+
         //Update author
         static void UpdateAuthor() {
 
@@ -373,6 +309,7 @@ namespace LibraryManagement
 
             Console.WriteLine();
         }
+
         //Remove author
         static void DeleteAuthor()
         {
@@ -395,6 +332,7 @@ namespace LibraryManagement
             }
             Console.WriteLine();
         }
+
         //List author
         static void ListAllAuthor() {
             if (authors.Count() == 0)
@@ -408,7 +346,8 @@ namespace LibraryManagement
             }
             Console.WriteLine();
         }
-        //add borrower
+
+        //Add borrower
         static void AddBorrower() {
             Console.WriteLine("Enter your first name: ");
             string firstName = Console.ReadLine();
@@ -423,6 +362,7 @@ namespace LibraryManagement
             Console.WriteLine("borrower added succesfuly..!");
             Console.WriteLine();
         }
+
         //update borrower
         static void UpdateBorrower() {
             Console.WriteLine("Write a first name of borrower that you want to update: ");
@@ -467,7 +407,8 @@ namespace LibraryManagement
 
             Console.WriteLine();
         }
-        //delete borrower
+
+        //Delete borrower
         static void DeleteBorrower() {
 
             Console.WriteLine("Write first name of borrower that you want to delete: ");
@@ -489,7 +430,8 @@ namespace LibraryManagement
             }
             Console.WriteLine();
         }
-        //list borrower
+
+        //list all borrower
         static void ListAllBorrower() {
             if(borrowers.Count==0) {
                 Console.WriteLine("No borrowers available in library..!");
@@ -501,6 +443,61 @@ namespace LibraryManagement
             Console.WriteLine();
         }
 
+        // Add a Borrow book
+        static void BorrowBook()
+        {
+            Console.WriteLine("Enter the title of book that you want to borrow: ");
+            string title = Console.ReadLine();
+            var book = books.Find(b => b.Title == title);
+            if (book != null)
+            {
+                if (book.IsAvailable)
+                {
+                    Console.WriteLine("Enter your first name: ");
+                    string firstName = Console.ReadLine();
+                    Console.WriteLine("Enter your last name: ");
+                    string lastName = Console.ReadLine();
+                    Console.WriteLine("Enter your email: ");
+                    string email = Console.ReadLine();
+                    Console.WriteLine("Enter your phone number: ");
+                    string phoneNumber = Console.ReadLine();
+                    Borrower borrower = new Borrower { FirstName = firstName, LastName = lastName, Email = email, PhoneNumber = phoneNumber };
+                    book.IsAvailable = false;
+                    Console.WriteLine("Book borrowed succesfully..!");
+                    borrowers.Add(borrower);
+                }
+                else
+                {
+                    Console.WriteLine("The book you want is not available..!");
+                }
+            } else
+            {
+                Console.WriteLine("Book is not found..!");
+            }
+            Console.WriteLine();
+        }
+
+        // List all Borrowed books
+        static void ListAllBorrowedBooks()
+        {
+            var borrowedBooks = books.Where(b => b.IsAvailable == false);
+            if (borrowedBooks.Any())
+
+            {
+                foreach (var b in borrowedBooks)
+                {
+                    Console.WriteLine(b.ToString());
+                    Console.WriteLine();
+                }
+            }
+            else
+            {
+                Console.WriteLine("No books is borrowed..!");
+            }
+            Console.WriteLine();
+        }
+
+        // Search book by title
         static void SearchBooks()
         {
             Console.WriteLine("Write a search title ");
@@ -520,6 +517,32 @@ namespace LibraryManagement
             {
                 Console.WriteLine("No results found!");
             }
+        }
+
+        // Chage book status avilable or not
+        static void FilterBookByStatus()
+        {
+
+            Console.WriteLine("Enter the availability status (true/false):");
+            string userInput = Console.ReadLine();
+            bool value = userInput.ToLower() == "true" ? true : false;
+
+
+            var book = books.FindAll(b => b.IsAvailable == value);
+            if (book.Any())
+            {
+                Console.WriteLine("Filtered books: ");
+                foreach (Book b in book)
+                {
+                    Console.WriteLine(b.ToString());
+                    Console.WriteLine();
+                }
+            }
+            else
+            {
+                Console.WriteLine("Not found..!!");
+            }
+            Console.WriteLine();
         }
     }
 
